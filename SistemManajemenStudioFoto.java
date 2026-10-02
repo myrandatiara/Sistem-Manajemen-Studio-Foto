@@ -2,6 +2,13 @@ package com.mycompany.sistemmanajemenstudiofoto;
 import java.util.Scanner;
 
 public class SistemManajemenStudioFoto {
+    
+    public static void simulasiTransaksi(LayananFoto item){
+        System.out.println("\n SIMULASI PROSES KETENTUAN LAYANAN ");
+        item.tampilkanInfo();
+        item.cetakKetentuan();
+        System.out.println("-------------------------------------");
+    }
 
     public static void cariLayanan(String nama, LayananFoto[] daftar, int jumlah) {
         System.out.println("\n--- Hasil Pencarian dengan Nama Paket: \"" + nama + "\" ---");
@@ -43,7 +50,7 @@ public class SistemManajemenStudioFoto {
             daftarLayanan[jumlahLayanan++] = new LayananStudio("Wisuda Ceria", 250000, 1, "Vintage Wood");
             daftarLayanan[jumlahLayanan++] = new LayananStudio("Foto Family Premium", 500000, 2, "Minimalis Modern");
             daftarLayanan[jumlahLayanan++] = new LayananOutdoor("Prewedding Nature", 1200000, 4, 150000);
-            daftarLayanan[jumlahLayanan++] = new LayananOutdoor("Street Portrait", 350000, 2, 50000);
+            daftarLayanan[jumlahLayanan++] = new LayananDokumentasi("Wedding Day Full", 3500000, 8, 3);
 
             System.out.println("=================================================");
             System.out.println("    SELAMAT DATANG DI SISTEM STUDIO FOTO KREATIF ");
@@ -55,8 +62,9 @@ public class SistemManajemenStudioFoto {
                 System.out.println("1. Tambah Paket Layanan Foto Baru");
                 System.out.println("2. Tampilkan Seluruh Daftar Layanan Foto");
                 System.out.println("3. Cari / Filter Layanan (Fitur Overloading)");
-                System.out.println("4. Keluar");
-                System.out.print("Pilih Menu (1-4): ");
+                System.out.println("4. Simulasi Layanan Transaksi");
+                System.out.println("5. Keluar");
+                System.out.print("Pilih Menu (1-5): ");
 
                 int pilihan = scanner.nextInt();
                 scanner.nextLine();
@@ -67,7 +75,8 @@ public class SistemManajemenStudioFoto {
                             System.out.println("\n-- Pilih Tipe Subclass Layanan --");
                             System.out.println("1. Layanan Studio Indoor");
                             System.out.println("2. Layanan Outdoor Session");
-                            System.out.print("Pilihan (1/2): ");
+                            System.out.println("3. Layanan Dokumentasi Event");
+                            System.out.print("Pilihan (1/2/3): ");
 
                             int jenis = scanner.nextInt();
                             scanner.nextLine();
@@ -93,7 +102,13 @@ public class SistemManajemenStudioFoto {
                                 scanner.nextLine();
                                 daftarLayanan[jumlahLayanan++] = new LayananOutdoor(namaPaket, harga, durasi, transpor);
                                 System.out.println("[Sukses] Layanan Outdoor Session berhasil ditambahkan!");
-                            } else {
+                            }else if (jenis == 3) {
+                                System.out.print("Masukkan Jumlah Kamera yang Digunakan: ");
+                                int kamera = scanner.nextInt();
+                                scanner.nextLine();
+                                daftarLayanan[jumlahLayanan++] = new LayananDokumentasi(namaPaket, harga, durasi, kamera);
+                                System.out.println("[Sukses] Layanan Dokumentasi Event berhasil ditambahkan!");
+                            }else {
                                 System.out.println("Tipe layanan tidak valid! Penambahan dibatalkan.");
                             }
                         } else {
@@ -115,7 +130,6 @@ public class SistemManajemenStudioFoto {
                                 daftarLayanan[i].cetakKetentuan();
                                 System.out.println("------------------------------------------------------------------------------------------");
                             }
-
                             System.out.println("\n* Total Objek Layanan yang Berhasil Dibuat: " + LayananFoto.getTotalLayananBerhasilDibuat());
                         }
 
@@ -144,16 +158,32 @@ public class SistemManajemenStudioFoto {
                         } else {
                             System.out.println("Pilihan mode pencarian tidak valid.");
                         }
+                        System.out.print("\nTekan Enter untuk kembali ke menu...");
+                        scanner.nextLine();
+                    }
+                    
+                    case 4 -> {
+                        System.out.println("\n-- Simulasi Transaksi Layanan --");
+                        for (int i = 0; i < jumlahLayanan; i++) {
+                            System.out.println((i + 1) + ". " + daftarLayanan[i].getNamaPaket());
+                        }
+                        System.out.print("Pilih nomor paket untuk disimulasikan (1-" + jumlahLayanan + "): ");
+                        int idx = scanner.nextInt() - 1;
+                        scanner.nextLine();
 
+                        if (idx >= 0 && idx < jumlahLayanan) {
+                            simulasiTransaksi(daftarLayanan[idx]);
+                        } else {
+                            System.out.println("Nomor paket tidak valid!");
+                        }
                         System.out.print("\nTekan Enter untuk kembali ke menu...");
                         scanner.nextLine();
                     }
 
-                    case 4 -> {
+                    case 5 -> {
                         System.out.println("Terima kasih telah menggunakan Sistem Studio Foto!");
                         isRunning = false;
                     }
-
                     default -> System.out.println("Pilihan tidak valid. Silakan pilih angka 1-4.");
                 }
             }

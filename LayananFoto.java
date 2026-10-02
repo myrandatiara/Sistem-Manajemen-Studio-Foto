@@ -1,11 +1,9 @@
 package com.mycompany.sistemmanajemenstudiofoto;
-
 public class LayananFoto {
 
     private String namaPaket;
     private double harga;
     private int durasiJam;
-
     private static int totalLayananBerhasilDibuat = 0;
 
     public LayananFoto(String namaPaket, double harga, int durasiJam) {
