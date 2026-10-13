@@ -1,5 +1,5 @@
 package com.mycompany.sistemmanajemenstudiofoto;
-public class LayananFoto {
+public abstract class LayananFoto {
 
     private String namaPaket;
     private double harga;
@@ -64,4 +64,5 @@ public class LayananFoto {
     public void cetakKetentuan() {
         System.out.println("-> Ketentuan Umum: Pembatalan H-1 dikenakan denda 50%.");
     }
+    public abstract void hitungBiayaLayanan();
 }

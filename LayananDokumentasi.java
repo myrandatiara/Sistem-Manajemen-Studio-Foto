@@ -1,5 +1,5 @@
 package com.mycompany.sistemmanajemenstudiofoto;
-public class LayananDokumentasi extends LayananFoto {
+public class LayananDokumentasi extends LayananFoto implements DapatDinilai {
     private int jumlahKamera;
 
     public LayananDokumentasi(String namaPaket, double harga, int durasiJam, int jumlahKamera) {
@@ -29,5 +29,16 @@ public class LayananDokumentasi extends LayananFoto {
     @Override
     public void cetakKetentuan() {
         System.out.println("-> Ketentuan Dokumentasi: Meliputi foto & video. File mentah diserahkan via Flashdisk/Drive.");
+    }
+    
+    @Override
+    public void hitungBiayaLayanan() {
+        System.out.printf("-> Total Rincian Biaya Dokumentasi: Rp %.2f (Termasuk %d unit kamera & perlengkapan)\n", 
+                getHarga(), this.jumlahKamera);
+    }
+    
+    @Override
+    public void beriRating(int bintang) {
+        System.out.println("-> [RATING DOKUMENTASI] Layanan dokumentasi mendapat rating " + bintang + "/5 Bintang.");
     }
 }

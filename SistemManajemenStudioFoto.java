@@ -128,6 +128,17 @@ public class SistemManajemenStudioFoto {
                                 System.out.print((i + 1) + ". ");
                                 daftarLayanan[i].tampilkanInfo();
                                 daftarLayanan[i].cetakKetentuan();
+                                daftarLayanan[i].hitungBiayaLayanan();
+                                
+                                if (daftarLayanan[i] instanceof DapatDireservasi) {
+                                    DapatDireservasi itemReservasi = (DapatDireservasi) daftarLayanan[i];
+                                    itemReservasi.prosesReservasi("25 Oktober 2026");
+                                }
+                                if (daftarLayanan[i] instanceof DapatDinilai) {
+                                    DapatDinilai itemBisaDinilai = (DapatDinilai) daftarLayanan[i];
+                                    itemBisaDinilai.beriRating(5);
+                                }
+            
                                 System.out.println("------------------------------------------------------------------------------------------");
                             }
                             System.out.println("\n* Total Objek Layanan yang Berhasil Dibuat: " + LayananFoto.getTotalLayananBerhasilDibuat());
