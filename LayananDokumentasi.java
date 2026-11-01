@@ -2,9 +2,12 @@ package com.mycompany.sistemmanajemenstudiofoto;
 public class LayananDokumentasi extends LayananFoto implements DapatDinilai {
     private int jumlahKamera;
 
-    public LayananDokumentasi(String namaPaket, double harga, int durasiJam, int jumlahKamera) {
+    public LayananDokumentasi(String namaPaket, double harga, int durasiJam, int jumlahKamera) throws Exception {
         super(namaPaket, harga, durasiJam);
-        setJumlahKamera(jumlahKamera);
+        if (jumlahKamera <= 0) {
+            throw new Exception("Jumlah kamera dokumentasi minimal 1 unit!");
+        }
+        this.jumlahKamera = jumlahKamera;
     }
 
     public int getJumlahKamera() {

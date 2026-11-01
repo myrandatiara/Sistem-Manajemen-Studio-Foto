@@ -6,10 +6,20 @@ public abstract class LayananFoto {
     private int durasiJam;
     private static int totalLayananBerhasilDibuat = 0;
 
-    public LayananFoto(String namaPaket, double harga, int durasiJam) {
+    public LayananFoto(String namaPaket, double harga, int durasiJam) throws Exception {
+        if (harga <= 0) {
+            throw new Exception("Harga paket harus lebih dari Rp 0!");
+        }
+        if (durasiJam <= 0) {
+            throw new Exception("Durasi jam layanan minimal 1 jam!");
+        }
+        if (namaPaket == null || namaPaket.trim().isEmpty()) {
+            throw new Exception("Nama paket tidak boleh kosong!");
+        }
+        
         this.namaPaket = namaPaket;
-        setHarga(harga); 
-        setDurasiJam(durasiJam);
+        this.harga = harga;
+        this.durasiJam = durasiJam;
         totalLayananBerhasilDibuat++;
     }
 

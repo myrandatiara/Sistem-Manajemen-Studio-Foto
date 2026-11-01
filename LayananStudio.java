@@ -3,9 +3,12 @@ package com.mycompany.sistemmanajemenstudiofoto;
 public class LayananStudio extends LayananFoto implements DapatDireservasi, DapatDinilai {
     private String namaBackdrop;
 
-    public LayananStudio(String namaPaket, double harga, int durasiJam, String namaBackdrop) {
+    public LayananStudio(String namaPaket, double harga, int durasiJam, String namaBackdrop) throws Exception {
         super(namaPaket, harga, durasiJam);
-        setNamaBackdrop(namaBackdrop);
+        if (namaBackdrop == null || namaBackdrop.trim().isEmpty()) {
+            throw new Exception("Nama backdrop studio tidak boleh kosong!");
+        }
+        this.namaBackdrop = namaBackdrop;
     }
 
     public String getNamaBackdrop() {

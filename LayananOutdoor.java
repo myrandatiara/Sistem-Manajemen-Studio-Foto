@@ -4,9 +4,12 @@ public class LayananOutdoor extends LayananFoto implements DapatDireservasi {
 
     private double biayaTransportasi;
 
-    public LayananOutdoor(String namaPaket, double harga, int durasiJam, double biayaTransportasi) {
+    public LayananOutdoor(String namaPaket, double harga, int durasiJam, double biayaTransportasi)throws Exception {
         super(namaPaket, harga, durasiJam);
-        setBiayaTransportasi(biayaTransportasi);
+        if (biayaTransportasi < 0) {
+            throw new Exception("Biaya transportasi outdoor tidak boleh negatif!");
+        }
+        this.biayaTransportasi = biayaTransportasi;
     }
 
     public double getBiayaTransportasi() {
