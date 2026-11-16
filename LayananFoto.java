@@ -1,5 +1,8 @@
 package com.mycompany.sistemmanajemenstudiofoto;
-public abstract class LayananFoto {
+import java.io.Serializable;
+
+public abstract class LayananFoto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String namaPaket;
     private double harga;
@@ -25,6 +28,10 @@ public abstract class LayananFoto {
 
     public static int getTotalLayananBerhasilDibuat() {
         return totalLayananBerhasilDibuat;
+    }
+    
+    public static void setTotalLayananBerhasilDibuat(int total) {
+        totalLayananBerhasilDibuat = total;
     }
 
     public String getNamaPaket() {

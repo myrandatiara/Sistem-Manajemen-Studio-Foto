@@ -1,6 +1,8 @@
 package com.mycompany.sistemmanajemenstudiofoto;
+import java.io.Serializable;
 
-public class Pelanggan {
+public class Pelanggan implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String idPelanggan;
     private String nama;
 

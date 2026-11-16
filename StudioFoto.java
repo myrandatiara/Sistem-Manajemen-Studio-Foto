@@ -2,6 +2,8 @@ package com.mycompany.sistemmanajemenstudiofoto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.*;
+import java.util.Scanner;
 
 public class StudioFoto {
     private String namaStudio;
@@ -94,4 +96,55 @@ public class StudioFoto {
     public Pelanggan getPelanggan(String id) { return dataPelanggan.get(id); }
     public LayananFoto getLayananInt(int index) { return daftarLayanan.get(index); }
     public int getJumlahLayanan() { return daftarLayanan.size(); }
+    
+    public void simpanDataKeFile() {
+        try {
+            FileOutputStream fileKeluar = new FileOutputStream("data_studio.dat");
+            ObjectOutputStream mesinPembeku = new ObjectOutputStream(fileKeluar);
+            mesinPembeku.writeObject(this.daftarLayanan);
+            mesinPembeku.writeObject(this.dataPelanggan);
+            mesinPembeku.close();
+            System.out.println("-> [SYSTEM LOG] Seluruh data berhasil disimpan (Serialization) ke dalam Harddisk!");
+        } catch (Exception e) {
+            System.out.println("-> [SYSTEM ERROR] Gagal menyimpan data: " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean muatDataDariFile() {
+        try {
+            File cekFile = new File("data_studio.dat");
+            if (!cekFile.exists()) return false;
+
+            FileInputStream fileMasuk = new FileInputStream(cekFile);
+            ObjectInputStream mesinPembangkit = new ObjectInputStream(fileMasuk);
+            this.daftarLayanan = (ArrayList<LayananFoto>) mesinPembangkit.readObject();
+            this.dataPelanggan = (HashMap<String, Pelanggan>) mesinPembangkit.readObject();
+            LayananFoto.setTotalLayananBerhasilDibuat(this.daftarLayanan.size());
+            mesinPembangkit.close();
+            System.out.println("-> [SYSTEM LOG] Data sistem berhasil dimuat ulang dari penyimpanan.");
+            return true;
+        } catch (Exception e) {
+            System.out.println("-> [SYSTEM ERROR] Gagal memuat data: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void bacaLogTransaksi() {
+        System.out.println("\n--- Riwayat Log Transaksi ---");
+        try {
+            File fileLog = new File("log_transaksi.txt");
+            if (!fileLog.exists()) {
+                System.out.println("Belum ada log transaksi studio foto.");
+                return;
+            }
+            Scanner mesinBaca = new Scanner(fileLog);
+            while (mesinBaca.hasNextLine()) {
+                System.out.println(mesinBaca.nextLine());
+            }
+            mesinBaca.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Gagal membuka file log.");
+        }
+    }
 }

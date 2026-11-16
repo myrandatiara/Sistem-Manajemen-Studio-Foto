@@ -16,17 +16,19 @@ public class SistemManajemenStudioFoto {
             StudioFoto studio = new StudioFoto("Studio Foto Kreatif");
             studio.bukaStudio();
             
-            try{
-                studio.tambahLayanan( new LayananStudio("Wisuda Ceria", 250000, 1, "Vintage Wood"));
-                studio.tambahLayanan( new LayananStudio("Foto Family Premium", 500000, 2, "Minimalis Modern"));
-                studio.tambahLayanan( new LayananOutdoor("Prewedding Nature", 1200000, 4, 150000));
-                studio.tambahLayanan( new LayananDokumentasi("Wedding Day Full", 3500000, 8, 3));
-            } catch (Exception e) {
-                System.out.println("Gagal menambahkan data awal: " + e.getMessage());
+            if (!studio.muatDataDariFile()){
+                try{
+                    studio.tambahLayanan( new LayananStudio("Wisuda Ceria", 250000, 1, "Vintage Wood"));
+                    studio.tambahLayanan( new LayananStudio("Foto Family Premium", 500000, 2, "Minimalis Modern"));
+                    studio.tambahLayanan( new LayananOutdoor("Prewedding Nature", 1200000, 4, 150000));
+                    studio.tambahLayanan( new LayananDokumentasi("Wedding Day Full", 3500000, 8, 3));
+                } catch (Exception e) {
+                    System.out.println("Gagal menambahkan data awal: " + e.getMessage());
+                }
+                studio.tambahPelanggan(new Pelanggan("PLG001", "Ahmad Kholifah"));
+                studio.tambahPelanggan(new Pelanggan("PLG002", "Tiara Mira"));
+                studio.tambahPelanggan(new Pelanggan("PLG003", "Bunga Susanti"));
             }
-            studio.tambahPelanggan(new Pelanggan("PLG001", "Ahmad Kholifah"));
-            studio.tambahPelanggan(new Pelanggan("PLG002", "Tiara Mira"));
-            studio.tambahPelanggan(new Pelanggan("PLG003", "Bunga Susanti"));
             
             boolean isRunning = true;
 
@@ -42,8 +44,9 @@ public class SistemManajemenStudioFoto {
                 System.out.println("3. Cari / Filter Layanan (Fitur Overloading)");
                 System.out.println("4. Simulasi Layanan Transaksi");
                 System.out.println("5. Data Pelanggan (HashMap)");
-                System.out.println("6. Keluar");
-                System.out.print("Pilih Menu (1-6): ");
+                System.out.println("6. Baca File Log Transaksi (Demo File I/O Teks)");
+                System.out.println("7. Simpan & Keluar");
+                System.out.print("Pilih Menu (1-7): ");
                 
                 try{ 
                     int pilihan = scanner.nextInt();
@@ -180,7 +183,7 @@ public class SistemManajemenStudioFoto {
                             } else if (menuPelanggan == 2) {
                                 System.out.print("Masukkan ID Pelanggan yang dicari: ");
                                 String searchId = scanner.nextLine();
-                                studio.cariPelanggan(scanner.nextLine());
+                                 
                             } else if (menuPelanggan == 3) {
                                 studio.lihatSemuaPelanggan();
                                 
@@ -190,9 +193,16 @@ public class SistemManajemenStudioFoto {
                             scanner.nextLine();
                         }
                         case 6 -> {
+                            studio.bacaLogTransaksi();
+                            System.out.print("\nTekan Enter untuk kembali ke menu...");
+                            scanner.nextLine();
+                        }
+                        case 7 -> {
+                            System.out.println("Menyimpan sesi ke database internal...");
+                            studio.simpanDataKeFile();
                             System.out.println("Terima kasih telah menggunakan Sistem Studio Foto!");
                             isRunning = false;
-                        }
+                        }                    
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("\n[ERROR SYSTEM] Input tidak valid! Anda harus memasukkan angka.");
